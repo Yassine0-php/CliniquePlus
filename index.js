@@ -27,24 +27,6 @@ let bddCliniquePlus = new sqlite3.Database('./CliniquePlus.db', sqlite3.OPEN_REA
 });
 
 
-// ajouter un patient
-
-// app.post("/patients", (req, res) => {
-//     const { nom, prenom, age, mail, telephone } = req.body;
-
-//     const sql = "INSERT INTO patient (nom, prenom, age, mail, telephone) VALUES (?, ?, ?,?,?)";
-
-//     bddCliniquePlus.run(sql, [nom, prenom, age, mail, telephone], function (err) {
-//         if (err) {
-//             return res.status(500).json({ error: err.message });
-//         }
-
-//         res.status(201).json({
-//             message: "Patient ajouté avec succès",
-//             id: this.lastID
-//         });
-//     });
-// });
 
 
 
