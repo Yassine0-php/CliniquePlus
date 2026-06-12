@@ -1,7 +1,5 @@
-
- 
-
- const sqlite3 = require('sqlite3').verbose();
+const sqlite3 = require('sqlite3').verbose();
+const userModele = require('../modele/utilisateur.js');
 
 let bddCliniquePlus = new sqlite3.Database('./CliniquePlus.db', sqlite3.OPEN_READONLY);
 

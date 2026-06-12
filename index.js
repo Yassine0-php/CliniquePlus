@@ -1,8 +1,8 @@
 const express = require("express");
 const sqlite3 = require('sqlite3').verbose();
 const app = express();
-const userModele = require('./Modele/utilisateur.js');
-const patientModele = require('./Modele/patient.js')
+
+
 const router = express.Router();
 
 // On conditionne le framework pour l'usage du json

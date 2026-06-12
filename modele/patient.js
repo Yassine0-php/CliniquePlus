@@ -5,7 +5,7 @@ let bddCliniquePlus = new sqlite3.Database('./CliniquePlus.db', sqlite3.OPEN_REA
 
 function findPatientById(id, callback) {
     bddCliniquePlus.get(
-        `SELECT * FROM patient WHERE patient.id = ?`,
+        `SELECT * FROM patient WHERE id = ?`,
         [id],
         (err, row) => {
             if (err) {
