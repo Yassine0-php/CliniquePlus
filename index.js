@@ -52,12 +52,9 @@ router.post('/login', (req, res) => {
 });
 
 
-router.post('/patientId', (req,res) => {
-
-    const { id } = req.body;
-    console.log("id reçu : ", id)
+router.get('/patientId/:id', (req,res) => {
+    const { id } = req.params;
     patientModele.findPatientById(id, (err, patient) => {
-        console.log(patient)
         if (err) {
             return res.status(500).json({ success: false });
         }
@@ -74,8 +71,8 @@ router.post('/patientId', (req,res) => {
                 }
             });
         
-        }else {
-             return res.status(404).json({"message":"Patient non trouvé"})
+        } else {
+             return res.status(404).json({"message":"Patient non trouvé"});
         }
 
             

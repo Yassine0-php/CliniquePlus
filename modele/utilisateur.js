@@ -1,7 +1,4 @@
-
- 
-
- const sqlite3 = require('sqlite3').verbose();
+const sqlite3 = require('sqlite3').verbose();
 
 let bddCliniquePlus = new sqlite3.Database('./CliniquePlus.db', sqlite3.OPEN_READONLY);
 
