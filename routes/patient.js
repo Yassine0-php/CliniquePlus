@@ -74,7 +74,7 @@ router.delete("/", (req, res) => {
 
         res.status(201).json({
             message: "Patient supprimé avec succès !!",
-            id: id
+            
         });
     }
 );
