@@ -33,6 +33,9 @@ router.get('/', (req,res) => {
 });
 
 
+
+
+
 router.post("/", (req, res) => {
     const { nom, prenom, age, mail, telephone } = req.body;
 
@@ -57,8 +60,25 @@ router.post("/", (req, res) => {
 );
 });
 
+router.delete("/", (req, res) => {
+     const id  = Number(req.query.id);
 
+    
 
+   patientModele.supprimerPatientId(
+    id,
+    (err, id) => {
+        if (err) {
+            return res.status(500).json({ message:"la supression n'a pas été faite" });
+        }
+
+        res.status(201).json({
+            message: "Patient supprimé avec succès !!",
+            id: id
+        });
+    }
+);
+});
 
 
 

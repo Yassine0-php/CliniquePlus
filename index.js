@@ -16,6 +16,7 @@ const patientRoute = require('./routes/patient.js')
 app.use('/login', userRoute)
 app.use('/patientId', patientRoute)
 app.use('/patients',patientRoute)
+app.use('/patientsupprimer',patientRoute)
 
 // On connecte la base de données
 let bddCliniquePlus = new sqlite3.Database('./CliniquePlus.db', sqlite3.OPEN_READWRITE, (err) => {

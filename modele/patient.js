@@ -29,6 +29,17 @@ function  ajouterNouveauPatient(nom,prenom,age,mail,telephone, callback){
 }
 
 
+function  supprimerPatientId(id, callback){
+    bddCliniquePlus.run(`DELETE FROM patient where id = ?`,[id],
+        (err, row) => {
+            if (err) {
+                return callback(err,null);
+            }
+            return callback(null, row)
+        }
+    )
+
+}
 
 
 
@@ -38,5 +49,6 @@ function  ajouterNouveauPatient(nom,prenom,age,mail,telephone, callback){
 
 module.exports = {
     findPatientById,
-    ajouterNouveauPatient
+    ajouterNouveauPatient,
+    supprimerPatientId
 };
