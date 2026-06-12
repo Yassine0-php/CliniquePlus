@@ -72,10 +72,7 @@ router.delete("/", (req, res) => {
             return res.status(500).json({ message:"la supression n'a pas été faite" });
         }
 
-        res.status(201).json({
-            message: "Patient supprimé avec succès !!",
-            
-        });
+        res.status(201).json({message: "Patient supprimé avec succès !!",});
     }
 );
 });
