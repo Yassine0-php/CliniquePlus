@@ -14,14 +14,14 @@ const port = 3000;
 
 
 // On connecte la base de données
-let bddCliniquePlus = new sqlite3.Database('./CliniquePlus.db', sqlite3.OPEN_READONLY, (err) => {
+/* let bddCliniquePlus = new sqlite3.Database('./CliniquePlus.db', sqlite3.OPEN_READONLY, (err) => {
     if(err) {
         console.error(err.message);
     } else {
         console.log('Connecté à la base de données.');
     }
 });
-
+ */
 
 // Déclaration de la route et du traitement des données POST
 
@@ -51,6 +51,19 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.get('/patients', (req,res) => {
+    patientModele.findAllPatients((err,patients) => {
+        if (err) {
+            return res.status(500).json({ success: false });
+        }
+
+        if (patients) {
+            console.log(patients);
+            return res.status(200).json(patients);
+            }
+            
+        });
+    });
 
 router.get('/patientId/:id', (req,res) => {
     const { id } = req.params;
@@ -60,22 +73,43 @@ router.get('/patientId/:id', (req,res) => {
         }
 
         if (patient) {
-            return res.status(200).json({
-                "patient": {
-                    "id": patient.idPatient,
-                    "nom": patient.nomPatient,
-                    "prenom": patient.prenomPatient,
-                    "mail": patient.mail,
-                    "nir": patient.nirPatient,
-                    "service": patient.servicePatient                    
-                }
-            });
+            return res.status(200).json(patient);
         
         } else {
              return res.status(404).json({"message":"Patient non trouvé"});
         }
 
             
+    });
+});
+
+router.get('/patientsService/:service', (req,res) => {
+    
+    const { service } = req.params;
+    patientModele.findPatientsByService(service, (err,patients) => {
+        if (err) {
+            return res.status(500).json({ success: false });
+        }
+
+        console.log(service, err,patients)
+
+        if (patients) {
+            console.log(patients);
+            for (let patient of patients) {
+                console.log(patient);
+            }
+            return res.status(200).json({
+                    "patient": {
+                        "id": patient.idPatient,
+                        "nom": patient.nomPatient,
+                        "prenom": patient.prenomPatient,
+                        "mail": patient.mail,
+                        "nir": patient.nirPatient                    
+                    }
+                });
+        } else {
+             return res.status(404).json({"message":"Patient non trouvé"});
+        } 
     });
 });
 
