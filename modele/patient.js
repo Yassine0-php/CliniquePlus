@@ -1,7 +1,7 @@
 
 const sqlite3 = require('sqlite3').verbose();
 
-let bddCliniquePlus = new sqlite3.Database('./CliniquePlus.db', sqlite3.OPEN_READONLY);
+let bddCliniquePlus = new sqlite3.Database('./CliniquePlus.db', sqlite3.OPEN_READWRITE);
 
 function findPatientById(id, callback) {
     bddCliniquePlus.get(
@@ -16,6 +16,27 @@ function findPatientById(id, callback) {
     );
 }
 
+function  ajouterNouveauPatient(nom,prenom,age,mail,telephone, callback){
+    bddCliniquePlus.run(`INSERT INTO patient (nom, prenom, age, mail, telephone) VALUES (?, ?, ?,?,?)`,[nom,prenom,age,mail,telephone],
+        (err, row) => {
+            if (err) {
+                return callback(err,null);
+            }
+            return callback(null, row)
+        }
+    )
+
+}
+
+
+
+
+
+
+
+
+
 module.exports = {
-    findPatientById
+    findPatientById,
+    ajouterNouveauPatient
 };
