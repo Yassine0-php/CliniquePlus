@@ -10,8 +10,11 @@ app.use(express.json());
 // On déclare une variable qui contient le port
 const port = 3000;
 
+const userRoute = require('./routes/utilisateurs.js')
+const patientRoute = require('./routes/patient.js')
 
-
+app.use('/login', userRoute)
+app.use('/patientId', patientRoute)
 
 // On connecte la base de données
 let bddCliniquePlus = new sqlite3.Database('./CliniquePlus.db', sqlite3.OPEN_READONLY, (err) => {
@@ -25,61 +28,9 @@ let bddCliniquePlus = new sqlite3.Database('./CliniquePlus.db', sqlite3.OPEN_REA
 
 // Déclaration de la route et du traitement des données POST
 
-router.post('/login', (req, res) => {
-
-    const { mail, password } = req.body;
-
-    userModele.findUserByMailAndPassword(mail, password, (err, user) => {
-
-        if (err) {
-            return res.status(500).json({ success: false });
-        }
-
-        if (user) {
-            return res.status(200).json({
-                success: true,
-                message: "Connexion validée",
-                id: user.id,
-                role: user.role
-            });
-        }
-
-        return res.status(401).json({
-            success: false,
-            message: "Connexion refusée"
-        });
-    });
-});
 
 
-router.post('/patientId', (req,res) => {
 
-    const { id } = req.body
-    console.log("id reçu : ", id)
-    patientModele.findPatientById(id, (err, patient) => {
-        console.log(patient)
-        if (err) {
-            return res.status(500).json({ success: false });
-        }
-
-        if (patient) {
-             return res.status(200).json({
-                "patient": {
-                    "id": patient.id,
-                    "nom": patient.nom,
-                    "prenom": patient.prenom,
-                    "mail": patient.mail,
-                    
-                }
-             });
-        
-        }else {
-             return res.status(404).json({"message":"Patient non trouvé"})
-        }
-
-            
-    });
-});
 
 app.use(router);
 
