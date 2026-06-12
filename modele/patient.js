@@ -16,30 +16,55 @@ function findPatientById(id, callback) {
     );
 }
 
-function  ajouterNouveauPatient(nom,prenom,age,mail,telephone, callback){
-    bddCliniquePlus.run(`INSERT INTO patient (nom, prenom, age, mail, telephone) VALUES (?, ?, ?,?,?)`,[nom,prenom,age,mail,telephone],
-        (err, row) => {
-            if (err) {
-                return callback(err,null);
-            }
-            return callback(null, row)
-        }
-    )
+function ajouterNouveauPatient(nom, prenom, age, mail, telephone, callback) {
+    bddCliniquePlus.run(
+        `INSERT INTO patient (nom, prenom, age, mail, telephone) VALUES (?, ?, ?, ?, ?)`,
+        [nom, prenom, age, mail, telephone],
+        function (err) {
 
+            if (err) {
+                return callback(err, null);
+            }
+
+            return callback(null, this.lastID);
+        }
+    );
 }
 
 
-function  supprimerPatientId(id, callback){
-    bddCliniquePlus.run(`DELETE FROM patient where id = ?`,[id],
-        (err, row) => {
-            if (err) {
-                return callback(err,null);
-            }
-            return callback(null, row)
-        }
-    )
+function supprimerPatientId(id, callback) {
+    bddCliniquePlus.run(
+        `DELETE FROM patient WHERE id = ?`,
+        [id],
+        function (err) {
 
+            if (err) {
+                return callback(err, null);
+            }
+
+            return callback(null, this.changes);
+        }
+    );
 }
+
+function modifierPatient(id, nom, prenom, age, mail, telephone, callback) {
+
+    bddCliniquePlus.run(
+        `UPDATE patient 
+         SET nom = ?, prenom = ?, age = ?, mail = ?, telephone = ?
+         WHERE id = ?`,
+        [nom, prenom, age, mail, telephone, id],
+        function (err) {
+
+            if (err) {
+                return callback(err, null);
+            }
+
+            return callback(null, this.changes);
+        }
+    );
+}
+
 
 
 
@@ -50,5 +75,7 @@ function  supprimerPatientId(id, callback){
 module.exports = {
     findPatientById,
     ajouterNouveauPatient,
-    supprimerPatientId
+    supprimerPatientId,
+    modifierPatient
+    
 };

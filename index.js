@@ -17,6 +17,7 @@ app.use('/login', userRoute)
 app.use('/patientId', patientRoute)
 app.use('/patients',patientRoute)
 app.use('/patientsupprimer',patientRoute)
+app.use('/patientModifier',patientRoute)
 
 // On connecte la base de données
 let bddCliniquePlus = new sqlite3.Database('./CliniquePlus.db', sqlite3.OPEN_READWRITE, (err) => {
